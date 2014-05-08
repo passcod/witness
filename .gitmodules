@@ -1,0 +1,3 @@
+[submodule "vendor/RustCMake"]
+	path = vendor/RustCMake
+	url = git://github.com/SiegeLord/RustCMake.git
