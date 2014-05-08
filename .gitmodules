@@ -1,3 +1,6 @@
 [submodule "vendor/RustCMake"]
 	path = vendor/RustCMake
 	url = git://github.com/SiegeLord/RustCMake.git
+[submodule "vendor/mongoose"]
+	path = vendor/mongoose
+	url = git://github.com/cesanta/mongoose.git

@@ -1,6 +1,10 @@
 cmake_minimum_required (VERSION 2.6)
 project (witness)
 
+add_custom_target(binding
+  COMMAND bindgen -builtins -l mongoose -o ${CMAKE_SOURCE_DIR}/src/mongoose.rs -I /usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.0/include/ ${CMAKE_SOURCE_DIR}/vendor/mongoose/mongoose.h)
+
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/vendor/RustCMake/cmake")
 find_package(rustc)
 find_package(rustdoc)
@@ -14,12 +18,12 @@ get_rust_deps(src/server.rs WITNESS_DEPS)
 rust_crate(src/server.rs
           TARGET_NAME WITNESS
           DESTINATION bin
-          DEPENDS "${WITNESS_DEPS}")
+          DEPENDS "${WITNESS_DEPS}" binding)
 
 rust_crate(src/server.rs
           TARGET_NAME WITNESS_TEST
           DESTINATION test
-          DEPENDS "${WITNESS_DEPS}"
+          DEPENDS "${WITNESS_DEPS}" binding
           OTHER_RUSTC_FLAGS --test)
 
 add_custom_target(default
