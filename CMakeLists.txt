@@ -9,14 +9,14 @@ include(Rust)
 set(RUSTC_FLAGS -L ${CMAKE_BINARY_DIR}/lib)
 set(RUSTDOC_FLAGS -L ${CMAKE_BINARY_DIR}/lib)
 
-get_rust_deps(src/hello.rs WITNESS_DEPS)
+get_rust_deps(src/server.rs WITNESS_DEPS)
 
-rust_crate(src/hello.rs
+rust_crate(src/server.rs
           TARGET_NAME WITNESS
           DESTINATION bin
           DEPENDS "${WITNESS_DEPS}")
 
-rust_crate(src/hello.rs
+rust_crate(src/server.rs
           TARGET_NAME WITNESS_TEST
           DESTINATION test
           DEPENDS "${WITNESS_DEPS}"
@@ -27,6 +27,6 @@ add_custom_target(default
                   DEPENDS ${WITNESS_FULL_TARGET})
 
 add_custom_target(test
-                  COMMAND ./hello || true
+                  COMMAND ./server || true
                   WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/test"
                   DEPENDS ${WITNESS_TEST_FULL_TARGET} ${WITNESS_FULL_TARGET})
