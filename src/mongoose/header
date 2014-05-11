@@ -1,0 +1,7 @@
+#![crate_type = "lib"]
+#![crate_id = "mongoose#1"]
+
+#![feature(globs)]
+#![feature(macro_rules)]
+#![allow(non_camel_case_types)]
+

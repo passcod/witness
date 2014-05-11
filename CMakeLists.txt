@@ -1,9 +1,14 @@
 cmake_minimum_required (VERSION 2.6)
 project (witness)
 
+add_library(mongoose ${CMAKE_SOURCE_DIR}/vendor/mongoose/mongoose.c)
 add_custom_target(binding
-  COMMAND bindgen -builtins -l mongoose -o ${CMAKE_SOURCE_DIR}/src/mongoose.rs -I /usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.0/include/ ${CMAKE_SOURCE_DIR}/vendor/mongoose/mongoose.h)
-
+  COMMAND bindgen -builtins -l mongoose -o mongoose/binds -I /usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.0/include/ ${CMAKE_SOURCE_DIR}/vendor/mongoose/mongoose.h
+  COMMAND cat mongoose/header mongoose/binds > mongoose/lib.rs
+  COMMAND rustc mongoose/lib.rs
+  COMMAND mkdir -p ${CMAKE_BINARY_DIR}/lib && mv libmongoose* ${CMAKE_BINARY_DIR}/lib/
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src"
+  DEPENDS mongoose)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/vendor/RustCMake/cmake")
 find_package(rustc)
